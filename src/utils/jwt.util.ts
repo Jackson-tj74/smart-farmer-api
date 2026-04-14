@@ -1,0 +1,27 @@
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs';
+
+const SECRET = process.env.JWT_SECRET || 'secret';
+
+
+
+export const generateToken = (userId: string, email: string, role: string) => {
+  return jwt.sign({ userId, email, role }, SECRET, { expiresIn: '7d' });
+};
+
+export const verifyToken = (token: string) => {
+  return jwt.verify(token, SECRET) as { userId: string; email: string; role: string };
+};
+
+
+export const comparePassword = async (
+  candidatePassword: string, 
+  storedPassword: string
+): Promise<boolean> => {
+  try {
+    return await bcrypt.compare(candidatePassword, storedPassword);
+  } catch (error) {
+    console.error('Error comparing passwords:', error);
+    return false;
+  }
+};

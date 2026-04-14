@@ -1,0 +1,72 @@
+🌱 Smart Farmer API
+The backend REST API powering the Smart Farmer Assistant. It provides secure endpoints for user authentication and AI-driven agricultural support.
+
+🚀 Features
+JWT Authentication: Secure login and registration for Farmers, Buyers, and Providers.
+AI Chat Engine: Integration with OpenAI to generate context-aware farming advice in Kinyarwanda.
+Image Analysis: Vision API support for detecting crop diseases from uploaded photos.
+Database: MongoDB with Mongoose for data persistence.
+🛠 Tech Stack
+Runtime: Node.js
+Framework: Express.js
+Language: TypeScript
+Database: MongoDB
+AI: OpenAI API (gpt-4o-mini)
+🔧 Installation
+Clone the repository
+git clone https://github.com/Jackson-tj74/smart-farmer-ai-assistant.git 
+Install dependencies
+npm install
+Configure Environment VariablesCreate a .env file in the root directory:
+PORT=5000NODE_ENV=development# DatabaseMONGODB_URI=mongodb://localhost:27017/smart-farmer# AuthJWT_SECRET=your-super-secret-jwt-key# OpenAIOPENAI_API_KEY=sk-your-openai-api-key-hereOPENAI_MODEL=gpt-4o-mini# Client URL (for CORS)CLIENT_URL=http://localhost:5173
+Run the server
+# Development mode with auto-reloadnpm run dev# Production modenpm run buildnpm start
+The API will be available at http://localhost:5000.
+
+📂 Project Structure
+smart-ai-assistant/
+├── src/
+│ ├── config/
+│ │ ├── database.ts # MongoDB connection
+│ │ └── openai.ts # OpenAI client initialization
+│ ├── controllers/
+│ │ ├── auth.controller.ts
+│ │ ├── chat.controller.ts # Core chat logic
+│ │ └── upload.controller.ts # Image handling
+│ ├── models/
+│ │ ├── User.ts
+│ │ ├── Chat.ts # Chat session schema
+│ │ └── Message.ts # Individual message schema
+│ ├── routes/
+│ │ ├── auth.routes.ts
+│ │ └── chat.routes.ts
+│ └── utils/
+│ ├── jwt.util.ts
+│ ├── farmPrompts.ts # System prompts for Kinyarwanda responses
+│ └── validators.ts # Zod schemas
+├── .env.example
+├── package.json
+└── tsconfig.json
+
+
+## 🔑 Key Endpoints
+
+### Authentication
+- `POST /api/auth/register` - Create a new user account.
+- `POST /api/auth/login` - Authenticate user and receive JWT.
+
+### Chat
+- `GET /api/chat` - List all chats for the authenticated user.
+- `POST /api/chat` - Create a new chat session.
+- `POST /api/chat/:chatId/message` - Send a message and receive AI response.
+- `GET /api/chat/:chatId` - Retrieve message history for a specific chat.
+
+### Analysis
+- `POST /api/upload/disease` - Upload a crop image for disease detection.
+
+## 🧠 AI Implementation
+
+The system uses `utils/farmPrompts.ts` to engineer the AI behavior:
+- **Persona:** Acts as "Umufasha w'Umuhinzi" (Farmer's Assistant).
+- **Language:** Prioritizes Kinyarwanda.
+- **Context:** Uses user profile data (crops grown, location) to tailor advice.
