@@ -1,12 +1,12 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
-import bcrypt from 'bcryptjs';
+
 
 export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
   role: 'farmer' | 'buyer' | 'provider';
-  location?: string; // Province/District in Rwanda
+  location?: string; 
   crops?: string[];
 }
 
